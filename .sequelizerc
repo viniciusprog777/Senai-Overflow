@@ -3,5 +3,6 @@ const database = require('./src/config/database')
 
 module.exports = {
     config: path.resolve(__dirname, "src", "config", "database.js"),
-    'migrations-path': path.resolve(__dirname, "src", "database", "migrations")
+    'migrations-path': path.resolve(__dirname, "src", "database", "migrations"),
+    'seeders-path': path.resolve(__dirname, "src", "database", "seeders")
 }

@@ -19,7 +19,8 @@ class Question extends Model {
 
     }
     static associate(models){
-        this.belongsTo(models.Student);
+        this.belongsTo(models.Student, { foreignKey: "aluno_id"});
+        this.belongsToMany(models.Category, {through: "tblquestion_category"})
     }
 }
 

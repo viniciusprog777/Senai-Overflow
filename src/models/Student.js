@@ -1,4 +1,4 @@
-const {Model, DataTypes, ForeignKeyConstraintError} = require("sequelize");
+const {Model, DataTypes} = require("sequelize");
 
 class Student extends Model {
     //aqui inicializamos os nosso campos na tabela;
@@ -21,6 +21,7 @@ class Student extends Model {
     static associate(models){
         console.log(models)
         this.hasMany(models.Question, { foreignKey: "aluno_id"})
+        
     }
 }
 

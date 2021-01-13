@@ -18,6 +18,9 @@ routes.get("/alunos/:id", alunoController.acharAluno);
 
 //rotas de perguntas 
 
+routes.get("/perguntas", perguntaControllers.index)
 routes.post("/pergunta", perguntaControllers.store)
+routes.put("/pergunta/:id", perguntaControllers.update);
+routes.delete("/pergunta/:id", perguntaControllers.delete)
 
 module.exports = routes;
