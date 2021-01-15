@@ -19,8 +19,9 @@ class Student extends Model {
 
     }
     static associate(models){
-        console.log(models)
-        this.hasMany(models.Question, { foreignKey: "aluno_id"})
+        // console.log(models)
+        this.hasMany(models.Question, { foreignKey: "aluno_id"});
+        this.hasMany(models.Answer, { foreignKey: "student_id"})
         
     }
 }

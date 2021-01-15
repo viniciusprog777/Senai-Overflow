@@ -1,7 +1,8 @@
 const express = require('express');
 
 const alunoController = require('./controllers/alunos')
-const perguntaControllers = require('./controllers/perguntas')
+const perguntaControllers = require('./controllers/perguntas');
+const answerControllers = require('./controllers/answers');
 const routes = express.Router();
 //configuração da rota
 
@@ -18,9 +19,13 @@ routes.get("/alunos/:id", alunoController.acharAluno);
 
 //rotas de perguntas 
 
-routes.get("/perguntas", perguntaControllers.index)
-routes.post("/pergunta", perguntaControllers.store)
+routes.get("/perguntas", perguntaControllers.index);
+routes.post("/pergunta", perguntaControllers.store);
 routes.put("/pergunta/:id", perguntaControllers.update);
-routes.delete("/pergunta/:id", perguntaControllers.delete)
+routes.delete("/pergunta/:id", perguntaControllers.delete);
+
+
+//rotas de respostas
+routes.post("/perguntas/:id/resposta", answerControllers.store)
 
 module.exports = routes;
