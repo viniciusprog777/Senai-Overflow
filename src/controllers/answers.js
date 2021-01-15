@@ -4,8 +4,9 @@ const Answer = require("../models/Answer");
 
 module.exports = {
     async index (req, res){
-        
+
     },
+    //função para adicionar uma resposta
     async store (req, res){
         const description = req.body.descricao;
         const {authorization} = req.headers;
