@@ -3,11 +3,11 @@ const Student = require("../models/Student");
 
 module.exports = {
     //função executada pela rota
-    async listarAlunos (req, res){
+    async index(req, res){
         try {
-            const alunos = await Student.findAll();
+            const students = await Student.findAll();
         
-            res.send(alunos);
+            res.status(200).send(students);
         } catch (error) {
             console.log(error);
             res.status(500).send({error})
@@ -17,7 +17,7 @@ module.exports = {
         
             
     },
-    async adicionarAlunos (req, res) {
+    async store (req, res) {
      
         // try {
         //     const {ra, nome, email, senha} =  req.body;
@@ -37,19 +37,19 @@ module.exports = {
         //             })
         //             res.status(201).send(aluno)
         //         }
-        const {ra, nome, email, senha} =  req.body;
-        let aluno = await Student.findOne({
+        const {ra, name, email, password} =  req.body;
+        let student = await Student.findOne({
             where:{
                 ra: ra
             }
         })
         try {
-            if (aluno) 
-                return res.status(400).send("Usuario existente!")
-            aluno = await Student.create({
-                ra, nome, email, senha
+            if (student) 
+                return res.status(400).send({error: "Usuario existente!"})
+            student = await Student.create({
+                ra, name, email, password
             })
-            return res.status(201).send(aluno)
+            return res.status(201).send(student)
                 
         } catch (error) {
             return res.status(500).send(error)
@@ -58,14 +58,14 @@ module.exports = {
         
         
     },
-    async deletarAluno (req, res){
+    async delete (req, res){
         const id = req.params.id;
         
-        let aluno = await Student.findByPk(id)
+        let student = await Student.findByPk(id)
         try {
-            if (!aluno) 
-                return res.status(400).send("Aluno não encontrado!")
-            await aluno.destroy();
+            if (!student) 
+                return res.status(400).send({error: "Aluno não encontrado!"})
+            await student.destroy();
 
             return res.status(200).send("Aluno apagado!")
         } catch (error) {
@@ -76,20 +76,20 @@ module.exports = {
     
         // res.status(204).send();
     },
-   async atualizarAluno (req, res){
+   async update (req, res){
         const id = req.params.id;
     
-        const {nome, email} = req.body;
+        const {name, email} = req.body;
         
         try {
-            let aluno = await Student.findByPk(id)
+            let student = await Student.findByPk(id)
             
-            if (!aluno) 
-                return res.status(400).send("Aluno não encontrado!")
-            aluno.nome = nome;
-            aluno.email = email;
+            if (!student) 
+                return res.status(400).send({error: "Aluno não encontrado!"})
+            student.name = name;
+            student.email = email;
 
-            aluno.save();
+            student.save();
 
             return res.status(200).send("Aluno Atualizado!")
 
@@ -108,16 +108,16 @@ module.exports = {
         // }
         // res.status(204).send();
     },
-    async acharAluno (req, res){
+    async find (req, res){
         const id = req.params.id;
         
-        let aluno = await Student.findByPk(id,{
-            attributes: ["id", "ra", "nome", "email"]
+        let student = await Student.findByPk(id,{
+            attributes: ["id", "ra", "name", "email"]
         })
         try {
-            if (aluno) 
-                return res.status(200).send(aluno)
-            return res.status(400).send("Aluno não encontrado!")
+            if (student) 
+                return res.status(200).send(student)
+            return res.status(400).send({error:"Aluno não encontrado!"})
                 
         } catch (error) {
             return res.status(500).send(error)

@@ -18,8 +18,8 @@ Question.associate(conex.models);
 Category.associate(conex.models);
 Answer.associate(conex.models);
 
-// for (let assoc of Object.keys(Question.associations)) {
-//     for (let accessor of Object.keys(Question.associations[assoc].accessors)) {
-//         console.log(Question.name + '.' + Question.associations[assoc].accessors[accessor] + '()');
-//     }
-// }
+for (let assoc of Object.keys(Question.associations)) {
+    for (let accessor of Object.keys(Question.associations[assoc].accessors)) {
+        console.log(Question.name + '.' + Question.associations[assoc].accessors[accessor] + '()');
+    }
+}

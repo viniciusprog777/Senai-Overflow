@@ -1,21 +1,28 @@
 
 const Question = require("../models/Question")
-const Student = require("../models/Student")
+const Student = require("../models/Student");
+const Answer = require("../models/Answer");
+
 
 module.exports = {
     async index(req, res) {
         const {authorization} = req.headers;
         const student = await Student.findByPk(authorization);
+        
 
         try {
             if (!student) 
                 return res.status(404).send("Usuario não encontrado!");
         
-            const questions = await Question.findAll({
-            where:{
-                aluno_id: authorization
+            const questions = await Question.findAll(
+               {
+            // where:{
+            //     student_id: authorization
+            //     },
+                include: [Student, Answer]
+                
             }
-            });
+            );
             res.status(201).send(questions);
         } 
         catch (error) {
@@ -26,20 +33,20 @@ module.exports = {
        
     },
     async store(req, res) {
-        const { titulo, descricao, imagem, gist, categorias} = req.body;
+        const { title, description, image, gist, category} = req.body;
         const {authorization} = req.headers;
 
-        const aluno = await Student.findByPk(authorization);
+        const student = await Student.findByPk(authorization);
 
-        if (!aluno)
-            return res.status(404).send("Usuario não encontrado!");
+        if (!student)
+            return res.status(404).send({error:"Usuario não encontrado!"});
 
         try {
-            let pergunta = await aluno.createQuestion({ titulo, descricao, imagem, gist});
+            let question = await student.createQuestion({ title, description, image, gist});
 
-            await pergunta.addCategories(categorias);
+            await question.addCategories(category);
 
-            res.status(201).send(pergunta)
+            res.status(201).send(question)
             
         } catch (error) {
             console.log(error);
@@ -51,20 +58,20 @@ module.exports = {
     },
     async update(req, res) {
         const questionId = req.params.id;
-        const {titulo, descricao} = req.body;
+        const {title, description} = req.body;
         const {authorization} = req.headers;
 
         try {
             const question = await Question.findOne({
                 where:{
                     id: questionId,
-                    aluno_id: authorization
+                    student_id: authorization
                 }
             })
             if (!question) 
-                return res.status(400).send("Erro ao atualizar a mensagem!")
-            question.titulo = titulo;
-            question.descricao = descricao;
+                return res.status(400).send({error:"Erro ao atualizar a mensagem!"});
+            question.title = title;
+            question.description = description;
 
             question.save();
 
@@ -83,11 +90,11 @@ module.exports = {
             let question = await Question.findOne({
                 where:{
                     id: questionId,
-                    aluno_id: authorization
+                    student_id: authorization
                 }
             });
             if (!question) 
-                return res.status(400).send("Erro ao apagar a mensagem! Usuario sem permissão")
+                return res.status(400).send({error:"Erro ao apagar a mensagem! Usuario sem permissão"});
             
 
             await question.destroy()

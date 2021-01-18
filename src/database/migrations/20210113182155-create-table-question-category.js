@@ -7,9 +7,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tblPerguntas",
+          model: "tblQuestion",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       category_id: {
         type: Sequelize.INTEGER,
@@ -18,6 +20,8 @@ module.exports = {
           model: "tblCategory",
           key: "id"
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       created_at: {
         type: Sequelize.DATE,

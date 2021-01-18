@@ -6,12 +6,12 @@ class Student extends Model {
         super.init(
             {
                 ra: DataTypes.STRING,
-                nome: DataTypes.STRING,
+                name: DataTypes.STRING,
                 email: DataTypes.STRING,
-                senha: DataTypes.STRING
+                password: DataTypes.STRING
             },
             {
-                tableName: "tblAlunos",
+                tableName: "tblStudent",
                 sequelize,
 
             }
@@ -20,7 +20,7 @@ class Student extends Model {
     }
     static associate(models){
         // console.log(models)
-        this.hasMany(models.Question, { foreignKey: "aluno_id"});
+        this.hasMany(models.Question, { foreignKey: "student_id"});
         this.hasMany(models.Answer, { foreignKey: "student_id"})
         
     }

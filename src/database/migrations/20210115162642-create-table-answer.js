@@ -16,17 +16,21 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tblPerguntas",
+          model: "tblQuestion",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       student_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tblAlunos",
+          model: "tblStudent",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       created_at: {
         type: Sequelize.DATE,

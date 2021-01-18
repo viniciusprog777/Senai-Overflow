@@ -2,21 +2,21 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.createTable("tblPerguntas",{
+    queryInterface.createTable("tblQuestion",{
       id:{
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      titulo:{
+      title:{
         type: Sequelize.STRING,
         allownull: false
       },
-      descricao:{
+      description:{
         type: Sequelize.STRING,
         allownull: false
       },
-      imagem:{
+      image:{
         type: Sequelize.STRING,
         allownull: true
       },
@@ -24,12 +24,14 @@ module.exports = {
         type: Sequelize.STRING,
         allownull: true
       },
-      aluno_id:{
+      student_id:{
         type: Sequelize.INTEGER,
         references: {
-          model: "tblalunos",
+          model: "tblStudent",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       created_at: {
         type: Sequelize.DATE,
@@ -43,6 +45,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.dropTable("tblPerguntas")
+    queryInterface.dropTable("tblQuestion")
   }
 };
