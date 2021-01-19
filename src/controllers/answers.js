@@ -9,11 +9,11 @@ module.exports = {
     //função para adicionar uma resposta
     async store (req, res){
         const {description} = req.body;
-        const {authorization} = req.headers;
+        const {studentId} = req;
         const questionId = req.params.id;
 
 
-        const student = await Student.findByPk(authorization);
+        const student = await Student.findByPk(studentId);
         const question = await Question.findByPk(questionId);
         
         
@@ -24,7 +24,7 @@ module.exports = {
             return res.status(404).send({error:"Pergunta não encontrada!"});
         
         try {
-            let answer = await question.createAnswer({description, student_id: authorization})
+            let answer = await question.createAnswer({description, student_id: studentId})
 
             return res.status(200).send(answer)
 

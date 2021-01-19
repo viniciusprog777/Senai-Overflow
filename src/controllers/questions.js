@@ -6,8 +6,8 @@ const Answer = require("../models/Answer");
 
 module.exports = {
     async index(req, res) {
-        const {authorization} = req.headers;
-        const student = await Student.findByPk(authorization);
+        const {studentId} = req;
+        const student = await Student.findByPk(studentId);
         
 
         try {
@@ -17,7 +17,7 @@ module.exports = {
             const questions = await Question.findAll(
                {
             // where:{
-            //     student_id: authorization
+            //     student_id: studentId
             //     },
                 include: [Student, Answer]
                 
@@ -34,9 +34,9 @@ module.exports = {
     },
     async store(req, res) {
         const { title, description, image, gist, category} = req.body;
-        const {authorization} = req.headers;
+        const {studentId} = req;
 
-        const student = await Student.findByPk(authorization);
+        const student = await Student.findByPk(studentId);
 
         if (!student)
             return res.status(404).send({error:"Usuario não encontrado!"});
@@ -59,13 +59,13 @@ module.exports = {
     async update(req, res) {
         const questionId = req.params.id;
         const {title, description} = req.body;
-        const {authorization} = req.headers;
+        const {studentId} = req;
 
         try {
             const question = await Question.findOne({
                 where:{
                     id: questionId,
-                    student_id: authorization
+                    student_id: studentId
                 }
             })
             if (!question) 
@@ -83,14 +83,14 @@ module.exports = {
     },
     async delete(req, res) {
         const questionId = req.params.id;
-        const {authorization} = req.headers;
+        const {studentId} = req;
 
         
         try {
             let question = await Question.findOne({
                 where:{
                     id: questionId,
-                    student_id: authorization
+                    student_id: studentId
                 }
             });
             if (!question) 

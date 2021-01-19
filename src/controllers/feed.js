@@ -6,8 +6,8 @@ const Answer = require("../models/Answer");
 
 module.exports = {
     async index(req, res) {
-        const {authorization} = req.headers;
-        const student = await Student.findByPk(authorization);
+        const {studentId} = req;
+        const student = await Student.findByPk(studentId);
 
         try {
             if (!student) 
@@ -17,7 +17,7 @@ module.exports = {
                 order: [["created_at", "DESC"]],
                 attributes: ["id", 'title', 'description', 'image', 'gist'],
             // where:{
-            //     student_id: authorization
+            //     student_id: studentId
             //     },
                 include: [
                     {association: "Student", attributes: ["id", "name", "email"]},
