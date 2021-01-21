@@ -1,3 +1,7 @@
 /node_modules
 
-/config/auth.json
+/src/config/auth.json
+
+/src/config/firebaseKey.json
+
+/src/uploads
