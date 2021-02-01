@@ -1,6 +1,7 @@
 require("./database");
 //Importa o Expresss
 
+const cors = require("cors");
 const { errors } = require("celebrate");
 
 const express = require("express");
@@ -10,6 +11,8 @@ const app = express();
 const routes = require("./routes");
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/uploads", express.static("./src/uploads"));
 
