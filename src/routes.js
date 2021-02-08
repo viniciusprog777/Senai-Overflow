@@ -15,6 +15,8 @@ const questionControllers = require("./controllers/questions");
 const answerControllers = require("./controllers/answers");
 const feedControllers = require("./controllers/feed");
 const sessionControllers = require("./controllers/sessions");
+const categoriesControllers = require("./controllers/categories");
+
 const routes = express.Router();
 
 // const multer = Multer({
@@ -38,6 +40,9 @@ routes.post("/sessions", sessionControllers.store);
 routes.post("/students", studentValidator.create, studentController.store);
 
 routes.use(authMiddleware);
+
+//rotas de categoria
+routes.get("/categories", categoriesControllers.index);
 
 //rotas de students
 routes.get("/students", studentController.index);

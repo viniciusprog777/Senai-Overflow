@@ -12,7 +12,14 @@ module.exports = {
 
       const questions = await Question.findAll({
         order: [["created_at", "DESC"]],
-        attributes: ["id", "title", "description", "image", "gist"],
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "image",
+          "gist",
+          "created_at",
+        ],
         // where:{
         //     student_id: studentId
         //     },
