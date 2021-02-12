@@ -7,7 +7,7 @@ const studentValidator = require("./validators/studentValidation");
 const questionValidator = require("./validators/questionValidation");
 const answerValidator = require("./validators/answerValidation");
 const authMiddleware = require("./middleware/authorization");
-const uploadQuestion = require("./middleware/uploadQuestions");
+const uploadSingleImage = require("./middleware/uploadSingleImage");
 const uploadFirebase = require("./services/uploadFirebase");
 
 const studentController = require("./controllers/students");
@@ -16,6 +16,8 @@ const answerControllers = require("./controllers/answers");
 const feedControllers = require("./controllers/feed");
 const sessionControllers = require("./controllers/sessions");
 const categoriesControllers = require("./controllers/categories");
+const studentImagesControllers = require("./controllers/studentImages");
+const searchControllers = require("./controllers/search");
 
 const routes = express.Router();
 
@@ -53,12 +55,18 @@ routes.put("/students/:id", studentController.update);
 
 routes.get("/students/:id", studentController.find);
 
+routes.post(
+  "/students/images",
+  uploadSingleImage,
+  uploadFirebase,
+  studentImagesControllers.store
+);
 //rotas de questions
 
 routes.get("/questions", questionControllers.index);
 routes.post(
   "/questions",
-  uploadQuestion,
+  uploadSingleImage,
   uploadFirebase,
   questionValidator.create,
   questionControllers.store
@@ -75,5 +83,8 @@ routes.post(
 
 //rotas de feed
 routes.get("/feed", feedControllers.index);
+
+//rotas de search
+routes.get("/search", searchControllers.index);
 
 module.exports = routes;

@@ -28,6 +28,7 @@ module.exports = {
           studentName: student.name,
           studentEmail: student.email,
           studentRa: student.ra,
+          studentImage: student.image,
         },
         token,
       });

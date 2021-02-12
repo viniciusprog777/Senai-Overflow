@@ -1,16 +1,29 @@
 const Question = require("../models/Question");
 const Student = require("../models/Student");
-const Answer = require("../models/Answer");
+const { Op } = require("sequelize");
 
 module.exports = {
   async index(req, res) {
     const { studentId } = req;
+
+    const { search } = req.body;
+
     const student = await Student.findByPk(studentId);
 
     try {
       if (!student) return res.status(404).send("Usuario não encontrado!");
 
       const questions = await Question.findAll({
+        where: {
+          [Op.or]: [
+            {
+              title: { [Op.like]: `%${search}%` },
+            },
+            {
+              description: { [Op.like]: `%${search}%` },
+            },
+          ],
+        },
         order: [["created_at", "DESC"]],
         attributes: [
           "id",
@@ -20,9 +33,6 @@ module.exports = {
           "gist",
           "created_at",
         ],
-        // where:{
-        //     student_id: studentId
-        //     },
         include: [
           {
             association: "Student",
@@ -43,7 +53,8 @@ module.exports = {
           },
         ],
       });
-      res.status(201).send(questions);
+
+      return res.status(201).send(questions);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
