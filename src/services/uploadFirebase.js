@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 
-const serviceAccount = require("../config/firebaseKey.json");
 
+const serviceAccount = require("../config/firebaseKey.json");
 const BUCKET = "senai-overflow-805aa.appspot.com";
 
 admin.initializeApp({
@@ -28,7 +28,7 @@ const uploadFirebase = (req, res, next) => {
   stream.on("error", (error) => {
     console.error(error);
 
-    res.status(500).send({ error: "Erro ao subir para po firebase" });
+    res.status(500).send({ error: "Erro ao subir para o firebase" });
   });
   stream.on("finish", () => {
     file.makePublic();

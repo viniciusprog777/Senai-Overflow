@@ -85,6 +85,6 @@ routes.post(
 routes.get("/feed", feedControllers.index);
 
 //rotas de search
-routes.get("/search", searchControllers.index);
+routes.get("/search/:description", searchControllers.index);
 
 module.exports = routes;
