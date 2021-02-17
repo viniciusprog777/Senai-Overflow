@@ -82,7 +82,7 @@ routes.post(
 );
 
 //rotas de feed
-routes.get("/feed", feedControllers.index);
+routes.get("/feed/:pag", feedControllers.index);
 
 //rotas de search
 routes.get("/search/:description", searchControllers.index);

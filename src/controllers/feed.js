@@ -5,6 +5,9 @@ const Answer = require("../models/Answer");
 module.exports = {
   async index(req, res) {
     const { studentId } = req;
+    let { pag } = req.params;
+    pag = pag - 1;
+
     const student = await Student.findByPk(studentId);
 
     try {
@@ -42,6 +45,7 @@ module.exports = {
             through: { attributes: [] },
           },
         ],
+        limit: [5 * pag, 5],
       });
       res.status(201).send(questions);
     } catch (error) {
