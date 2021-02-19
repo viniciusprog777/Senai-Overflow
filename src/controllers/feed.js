@@ -5,13 +5,14 @@ const Answer = require("../models/Answer");
 module.exports = {
   async index(req, res) {
     const { studentId } = req;
-    let { pag } = req.params;
-    pag = pag - 1;
+    let { page } = req.query;
 
     const student = await Student.findByPk(studentId);
 
     try {
       if (!student) return res.status(404).send("Usuario não encontrado!");
+
+      const questionTotal = await Question.count();
 
       const questions = await Question.findAll({
         order: [["created_at", "DESC"]],
@@ -45,9 +46,15 @@ module.exports = {
             through: { attributes: [] },
           },
         ],
-        limit: [5 * pag, 5],
+        limit: page ? [5 * (page - 1), 5] : undefined,
       });
-      res.status(201).send(questions);
+
+      res.header("X-Total-Count", questionTotal);
+      res.header("Access-Control-Expose-Headers", "X-Total-Count");
+
+      setTimeout(() => {
+        res.status(201).send(questions);
+      }, 1000);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);

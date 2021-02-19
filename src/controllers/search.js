@@ -6,7 +6,7 @@ module.exports = {
   async index(req, res) {
     const { studentId } = req;
 
-    const { description }  = req.params;
+    const { description } = req.query;
     console.log(req.body);
 
     const student = await Student.findByPk(studentId);

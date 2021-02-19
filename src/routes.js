@@ -6,6 +6,7 @@ const multer = Multer();
 const studentValidator = require("./validators/studentValidation");
 const questionValidator = require("./validators/questionValidation");
 const answerValidator = require("./validators/answerValidation");
+const searchValidator = require("./validators/searchValidation");
 const authMiddleware = require("./middleware/authorization");
 const uploadSingleImage = require("./middleware/uploadSingleImage");
 const uploadFirebase = require("./services/uploadFirebase");
@@ -82,9 +83,9 @@ routes.post(
 );
 
 //rotas de feed
-routes.get("/feed/:pag", feedControllers.index);
+routes.get("/feed", feedControllers.index);
 
 //rotas de search
-routes.get("/search/:description", searchControllers.index);
+routes.get("/search", searchControllers.index, searchControllers.index);
 
 module.exports = routes;
