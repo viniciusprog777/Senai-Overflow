@@ -1,29 +1,29 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.createTable("tblCategory",{
-      id:{
+    queryInterface.createTable("tblcategory", {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false
-      }
-    })
+        allowNull: false,
+      },
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.dropTable("tblCategory");
-  }
+    queryInterface.dropTable("tblcategory");
+  },
 };

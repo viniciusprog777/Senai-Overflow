@@ -1,25 +1,23 @@
 const jwt = require("jsonwebtoken");
-const auth = require('../config/auth.json')
+const auth = require("../config/auth");
 module.exports = (req, res, next) => {
-    const {authorization} = req.headers;
+  const { authorization } = req.headers;
 
-    if (!authorization) 
-        res.status(401).send({error: "Token não informado"})
-    
-    const [Bearer, token] = authorization.split(" ");
+  if (!authorization) res.status(401).send({ error: "Token não informado" });
 
-    if (!token) {
-        res.status(401).send({error: "Token mal formatado"})
-    }
-    
-    try {
-        const payload = jwt.verify(token, auth.secret)
+  const [Bearer, token] = authorization.split(" ");
 
-        req.studentId = payload.studentId;
-        
-        return next();
+  if (!token) {
+    res.status(401).send({ error: "Token mal formatado" });
+  }
 
-    } catch (error) {
-        res.status(401).send({error: "Token inválido"})
-    }
-}
+  try {
+    const payload = jwt.verify(token, auth.secret);
+
+    req.studentId = payload.studentId;
+
+    return next();
+  } catch (error) {
+    res.status(401).send({ error: "Token inválido" });
+  }
+};

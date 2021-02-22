@@ -1,7 +1,6 @@
 const admin = require("firebase-admin");
 
-
-const serviceAccount = require("../config/firebaseKey.json");
+const serviceAccount = require("../config/firebaseKey");
 const BUCKET = "senai-overflow-805aa.appspot.com";
 
 admin.initializeApp({

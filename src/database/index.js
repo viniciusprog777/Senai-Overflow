@@ -1,12 +1,12 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const dbConfig = require("../config/database");
 
-const Student = require("../models/Student")
-const Question = require("../models/Question")
-const Category = require("../models/Category")
-const Answer = require("../models/Answer")
+const Student = require("../models/Student");
+const Question = require("../models/Question");
+const Category = require("../models/Category");
+const Answer = require("../models/Answer");
 
-const conex = new Sequelize(dbConfig);
+const conex = new Sequelize(dbConfig.url, dbConfig.config);
 
 Student.init(conex);
 Question.init(conex);

@@ -12,7 +12,7 @@ class Student extends Model {
         image: DataTypes.STRING,
       },
       {
-        tableName: "tblStudent",
+        tableName: "tblstudent",
         sequelize,
       }
     );
